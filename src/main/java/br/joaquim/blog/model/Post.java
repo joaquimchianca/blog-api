@@ -14,11 +14,11 @@ import lombok.NoArgsConstructor;
 public class Post {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "title")
     private String title;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "description")
     private String description;
-    @Column(nullable = false)
+    @Column(name = "content",nullable = false)
     private String content;
 
 }

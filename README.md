@@ -1,2 +1,2 @@
 # Blog App Restful API
-An blog API developed in Java and Spring
+A blog API developed in Java and Spring

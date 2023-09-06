@@ -57,7 +57,11 @@ public class PostServiceImpl implements PostService {
         if (dto.getContent() != null) {
             p.setContent(dto.getContent());
         }
-        repo.save(p);
+        if (dto.getTitle() != null ||
+                dto.getDescription() != null ||
+                dto.getContent() != null) {
+            repo.save(p);
+        }
 
         return new PostDto(p);
     }

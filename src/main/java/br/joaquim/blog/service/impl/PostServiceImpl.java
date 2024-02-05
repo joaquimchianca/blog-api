@@ -5,6 +5,10 @@ import br.joaquim.blog.exception.ResourceNotFoundException;
 import br.joaquim.blog.model.Post;
 import br.joaquim.blog.repository.PostRepository;
 import br.joaquim.blog.service.PostService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,11 +31,18 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAll() {
-        List<Post> postList = repo.findAll();
-        return postList.stream()
-                .map(PostDto::new)
-                .collect(Collectors.toList());
+    public Page<PostDto> getAll(
+            int pageNo, int pageSize, String sortBy, String sortDir
+    ) {
+
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.DESC.name()) ?
+                Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+
+        Page<Post> posts = repo.findAll(pageable);
+
+        return posts.map(PostDto::new);
     }
 
     @Override

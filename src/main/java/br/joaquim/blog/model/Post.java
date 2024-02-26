@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.Set;
+
+import java.util.HashSet;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,6 +25,9 @@ public class Post {
     @Column(name = "content",nullable = false, columnDefinition = "TEXT")
     private String content;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Comment> comments = new HashSet<>();
+
     public PostDto mapToDto() {
         PostDto dto = new PostDto();
         dto.setId(this.id);
@@ -36,5 +42,9 @@ public class Post {
         this.title = p.getTitle();
         this.content = p.getContent();
         this.description = p.getDescription();
+    }
+
+    public Long getId() {
+        return id;
     }
 }

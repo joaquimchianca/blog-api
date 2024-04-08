@@ -1,6 +1,7 @@
 package br.joaquim.blog.service;
 
 import br.joaquim.blog.dto.PostDto;
+import br.joaquim.blog.dto.PostResponse;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 public interface PostService {
     PostDto create(PostDto p);
 
-    Page<PostDto> getAll(int pageNo, int pageSize, String sortBy, String sortDir);
+    PostResponse getAll(int pageNo, int pageSize, String sortBy, String sortDir);
 
     PostDto getById(Long id);
 

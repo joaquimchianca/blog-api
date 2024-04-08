@@ -1,5 +1,8 @@
 package br.joaquim.blog.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,8 +12,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommentDto {
     private long id;
+    @NotEmpty(message = "name must not be empty")
     private String name;
+    @Email(message = "email format is not accepted") @NotEmpty(message = "email must not be empty")
     private String email;
+    @Min(value = 15, message = "comment must have at least 15 characters")
     private String body;
 
     public long getId() {

@@ -1,7 +1,9 @@
 package br.joaquim.blog.controller;
 
 import br.joaquim.blog.dto.PostDto;
+import br.joaquim.blog.dto.PostResponse;
 import br.joaquim.blog.service.PostService;
+import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
@@ -24,12 +26,12 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<PostDto> create(@RequestBody PostDto p) {
+    public ResponseEntity<PostDto> create(@Valid @RequestBody PostDto p) {
         return new ResponseEntity<>(svc.create(p), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<Page<PostDto>> getAll(
+    public ResponseEntity<PostResponse> getAll(
             @RequestParam(value = "pageNo", defaultValue = DEFAULT_PAGE_NUMBER, required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = DEFAULT_PAGE_SIZE, required = false) int pageSize,
             @RequestParam(value = "sortBy", defaultValue = DEFAULT_SORT_BY, required = false) String sortBy,
@@ -42,7 +44,7 @@ public class PostController {
     public ResponseEntity<PostDto> getById(@PathVariable Long id) { return ResponseEntity.ok(svc.getById(id));}
 
     @PutMapping("/{id}")
-    public ResponseEntity<PostDto> update(@PathVariable Long id, @RequestBody PostDto dto) {
+    public ResponseEntity<PostDto> update(@PathVariable Long id, @Valid @RequestBody PostDto dto) {
         return ResponseEntity.ok(svc.update(id, dto));
     }
 

@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -61,5 +62,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             exceptions.put(fieldName, fieldMessage);
         });
         return new ResponseEntity<>(exceptions, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorDetails> handleAcessDeniedException(
+            AccessDeniedException exception, WebRequest request
+    ) {
+        ErrorDetails errorDetails = new ErrorDetails(
+                new Date(), exception.getMessage(), request.getDescription(false)
+        );
+
+        return new ResponseEntity<>(errorDetails, HttpStatus.UNAUTHORIZED);
     }
 }

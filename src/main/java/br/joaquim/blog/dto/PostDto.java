@@ -24,7 +24,7 @@ public class PostDto {
     private String description;
 
     @NotEmpty(message = "content must not be empty")
-    @Min(value = 15, message = "content must have at least 15 characters")
+    @Size(min = 15, message = "content must have at least 15 characters")
     private String content;
     private Set<CommentDto> comments;
 
